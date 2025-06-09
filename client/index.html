@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head><title>AI Room</title></head>
+<body>
+  <h3>Room: <span id="roomId">room1</span></h3>
+  <ul id="chat"></ul>
+  <input id="promptInput" placeholder="Say something" />
+  <button onclick="sendPrompt()">Send</button>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script>
+    const roomId = prompt("Enter room ID (e.g. team123):");
+    document.getElementById("roomId").innerText = roomId;
+
+    const socket = io("http://localhost:3000");
+    const chat = document.getElementById("chat");
+
+    socket.emit("joinRoom", roomId);
+
+    socket.on("history", (history) => {
+      history.forEach(msg => {
+        const li = document.createElement("li");
+        li.textContent = `${msg.role}: ${msg.content}`;
+        chat.appendChild(li);
+      });
+    });
+
+    socket.on("response", ({ prompt, response }) => {
+      const userLine = document.createElement("li");
+      userLine.textContent = `You: ${prompt}`;
+      chat.appendChild(userLine);
+
+      const aiLine = document.createElement("li");
+      aiLine.textContent = `AI: ${response}`;
+      chat.appendChild(aiLine);
+    });
+
+    function sendPrompt() {
+      const input = document.getElementById("promptInput");
+      const prompt = input.value;
+      socket.emit("prompt", { roomId, prompt });
+      input.value = "";
+    }
+  </script>
+</body>
+</html>
