@@ -27,6 +27,8 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   </head>
   <body>
+    <div id="sign-in"></div>
+    <div id="user-button"></div>
     <div class="relative flex size-full min-h-screen flex-col bg-gray-50 group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
       <div class="layout-container flex h-full grow flex-col">
         <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e9edf1] px-10 py-3">
@@ -69,72 +71,6 @@
             <h2 class="text-[#101419] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Prompt History</h2>
             <ul id="chat" class="flex flex-col gap-3 px-4 pb-4">
             </ul>
-              <!-- Chat messages will be dynamically added here -->
-            <!-- <div class="flex w-full flex-row items-start justify-start gap-3 p-4">
-              <div
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 shrink-0"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDK4EtH2kXUwCmXjwmhzUdopB-JjVCvziY670ZTbkyIoabBJtnDsVwqPjVUcP07jA0Tx-FYMR7ihgy-OkK7z0gKSfSiA_7a9QF1MzOZH5kE3rSlUxEg0kNCI-vNOiNjU2cIDJM5W3hNQtkHXbA4vqVkaqrVliHvZA-dQaTlsB3r7dmI5E5p9rDEdscSxGWH8QJP1XzoYfKGNA_12CwpCAiZ5OBnwPQ8LoIBIXSgG87nBSF_qEAjbYFREkSj6-TrlGCUaKuzSVrJWQ");'
-              ></div>
-              <div class="flex h-full flex-1 flex-col items-start justify-start">
-                <div class="flex w-full flex-row items-start justify-start gap-x-3">
-                  <p class="text-[#101419] text-sm font-bold leading-normal tracking-[0.015em]">Sophia Carter</p>
-                  <p class="text-[#58728d] text-sm font-normal leading-normal">2 hours ago</p>
-                </div>
-                <p class="text-[#101419] text-sm font-normal leading-normal">Generate a marketing campaign for a new line of organic skincare products.</p>
-              </div>
-            </div>
-            <div class="flex w-full flex-row items-start justify-start gap-3 p-4">
-              <div
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 shrink-0"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB6Ejo5-YnZVCurx6YBxDhCXqFtPWuOSSI5Ekh1ei12bYiC3ko_jcgV2ymdfx3j_qvzxXjTbdgLZkDiGMyKt30J5kM9E-LEFrJki5FW684i3fHzT6M5pdw7aLDgHUetHjTtK318oYvo2G0wgMExnapA-WdC2HKFuvbFQQAL30QDJQ2PA9qXvXnoFMslLp4LPQMSLL_w0Z2Gwc6rk5i9cUzqyfV_Pl81UNIspGG2cu6Olg-EQ8Zwem7JsGSsSGIAB8I8Gem6Yu7ang");'
-              ></div>
-              <div class="flex h-full flex-1 flex-col items-start justify-start">
-                <div class="flex w-full flex-row items-start justify-start gap-x-3">
-                  <p class="text-[#101419] text-sm font-bold leading-normal tracking-[0.015em]">Liam Bennett</p>
-                  <p class="text-[#58728d] text-sm font-normal leading-normal">3 hours ago</p>
-                </div>
-                <p class="text-[#101419] text-sm font-normal leading-normal">Create a detailed product description for a high-end coffee maker.</p>
-              </div>
-            </div>
-            <div class="flex w-full flex-row items-start justify-start gap-3 p-4">
-              <div
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 shrink-0"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuArBRFUnPj0hM92QMVIPCfOp4AJSSnJQazUs0Jwvk5SQiTbu0C5PyXQBpFSQWV7t749Kra1J5e7fhmPk08jAVtevulBrI7Wyeh0cXMxq2yqKB4-N7oVjadYZQ-ooUt2PU94eXqNTdL87tmE8VTh6WivG9hnIC7ltUX5Hu7SvBpYwrsJffawAOEd4s60kkXwc8p6Lbrm7hkadAYbnb-D9tuX8_8bVzeHJ_5hl3-YAh76pQV2X9iZJIDDcCY30wiOlUt6uP73HiqTzg");'
-              ></div>
-              <div class="flex h-full flex-1 flex-col items-start justify-start">
-                <div class="flex w-full flex-row items-start justify-start gap-x-3">
-                  <p class="text-[#101419] text-sm font-bold leading-normal tracking-[0.015em]">Olivia Hayes</p>
-                  <p class="text-[#58728d] text-sm font-normal leading-normal">4 hours ago</p>
-                </div>
-                <p class="text-[#101419] text-sm font-normal leading-normal">Draft an email to a potential client introducing our new services.</p>
-              </div>
-            </div>
-            <div class="flex w-full flex-row items-start justify-start gap-3 p-4">
-              <div
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 shrink-0"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAH7m7HPztI2taFgYzCZE773UMUj39aT8zZqBzAgx6AyvuRV3pJUnDHdYpePFT90PrSo7Y7-ClX69rwj4Oo7uAK9LcsrHp_09pXm7hbnZocWEZR7z3ih1eApHLXJ1-OjmSggAPJFVO3H9sWK1dF99YK-2C8kZUFjByPq4omL89yE4x-dKRGOJqsjjXb-DNpWx6_9oOBUO2N5bnDI3-ndh33sEz-IgyxBCg1sp-fLnUWHNLwuxlJhAT_ZeWaTxhQoxVeQtZD0nc1GA");'
-              ></div>
-              <div class="flex h-full flex-1 flex-col items-start justify-start">
-                <div class="flex w-full flex-row items-start justify-start gap-x-3">
-                  <p class="text-[#101419] text-sm font-bold leading-normal tracking-[0.015em]">Ethan Walker</p>
-                  <p class="text-[#58728d] text-sm font-normal leading-normal">5 hours ago</p>
-                </div>
-                <p class="text-[#101419] text-sm font-normal leading-normal">Write a blog post about the benefits of remote work.</p>
-              </div>
-            </div>
-            <div class="flex w-full flex-row items-start justify-start gap-3 p-4">
-              <div
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 shrink-0"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC1lKd1ktgo6ARDYAIeBtPwDeJeL50rWyvkFBoZM-kkV8KHzIyMpkkfiqtLzeK4SIsXdZ3Z6B_sMyD3hHr_HYVXeXHO_0SJJAC_YNj8VfA52pMda1tGJybLEy4u5tTuq_RjlfUzAmxWU5IV9ooCs5JDU-7bYFd-YvupTmwPgE-t7sjDSkimr12VrV17KpX0k1h_NUJt4EgJieJMwUEAczKd6FlNAJco-RMaYUe82rg5s_FRXc6ATFuid1Xx3ZlKzJR0Xqxn9Gensw");'
-              ></div>
-              <div class="flex h-full flex-1 flex-col items-start justify-start">
-                <div class="flex w-full flex-row items-start justify-start gap-x-3">
-                  <p class="text-[#101419] text-sm font-bold leading-normal tracking-[0.015em]">Ava Morgan</p>
-                  <p class="text-[#58728d] text-sm font-normal leading-normal">6 hours ago</p>
-                </div>
-                <p class="text-[#101419] text-sm font-normal leading-normal">Develop a social media strategy for a local bakery.</p>
-              </div>
-            </div> -->
             <div class="flex items-center px-4 py-3 gap-3 @container">
               <div
                 class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 shrink-0"
@@ -166,6 +102,27 @@
       </div>
     </div>
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script type="module">
+      import { loadClerk } from "https://cdn.skypack.dev/@clerk/clerk-js@4";
+      const clerk = await loadClerk({ publlishableKey: "pk_test_Y2hhcm1pbmctZ2F0b3ItOTguY2xlcmsuYWNjb3VudHMuZGV2JA" });
+      await clerk.mountSignInButton("#sign-in");
+      await clerk.mountUserButton("#user-button");
+
+      if (!clerk.user) {
+        await clerk.openSignIn({ redirectUrl: window.location.href });
+        return;
+      }
+      const user = Clerk.user;
+      // Send to server during joinRoom
+      socket.emit("joinRoom", {
+        roomId,
+        user: {
+          id: user.id,
+          username: user.username,
+          imageUrl: user.imageUrl
+        }
+      });
+    </script>
     <script>
       const roomId = prompt("Enter room ID (e.g. team123):");
       // Optionally, display the roomId somewhere in your UI if needed

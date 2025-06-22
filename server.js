@@ -1,57 +1,73 @@
-// server.js
+require('dotenv').config();
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const { OpenAI } = require('openai');
-require('dotenv').config();
+const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
 
-// Serve static files from the client directory
-app.use(express.static('client'));
-
-// In-memory storage (for now)
 const roomHistories = {};
 const openai = new OpenAI({
   apiKey: process.env.OPEN_AI_API_KEY,
 });
 
+// Serve static React app
+app.use(express.static(path.join(__dirname, 'client', 'dist')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+});
+
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
 
-  // Join a room
-  socket.on('joinRoom', (roomId) => {
+  socket.on('joinRoom', ({ roomId, user }) => {
+    if (!user || !user.username) {
+      console.error("User info missing");
+      return;
+    }
+
     socket.join(roomId);
+    socket.user = user;
     console.log(`${socket.id} joined room ${roomId}`);
 
-    // Send current history
+    io.to(roomId).emit('userJoined', {
+      user,
+      message: `${user.username} has joined the room.`,
+    });
+
     const history = roomHistories[roomId] || [];
     socket.emit('history', history);
   });
 
-  // Handle a prompt in a room
   socket.on('prompt', async ({ roomId, prompt }) => {
-    console.log(`Prompt in room ${roomId}:`, prompt);
+    if (!roomId) {
+      console.error('Room ID is required');
+      return;
+    }
 
-    // Save the prompt
+    const user = socket.user;
+    if (!user) {
+      console.error("Prompt received but user is undefined");
+      return;
+    }
+
     roomHistories[roomId] = roomHistories[roomId] || [];
-    roomHistories[roomId].push({ role: "user", content: prompt });
+    roomHistories[roomId].push({ role: "user", name: user.username, content: prompt });
 
-    // Get AI response
     const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini", // or gpt-3.5-turbo
+      model: "gpt-4o", // or "gpt-3.5-turbo"
       messages: roomHistories[roomId],
     });
 
     const aiMessage = response.choices[0].message;
     roomHistories[roomId].push(aiMessage);
-    // console.log(length(roomHistories[roomId]));
 
-    // Broadcast to all users in room
     io.to(roomId).emit('response', {
       prompt,
+      user,
       response: aiMessage.content,
     });
   });
